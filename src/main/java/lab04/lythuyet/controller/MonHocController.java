@@ -1,12 +1,11 @@
 package lab04.lythuyet.controller;
 
-import lab04.lythuyet.entity.Lop;
 import lab04.lythuyet.entity.MonHoc;
-import lab04.lythuyet.services.LopService;
 import lab04.lythuyet.services.MonHocService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +30,10 @@ public class MonHocController {
     }
 
     @PostMapping("/add")
-    public String addMonHoc(@ModelAttribute("mon") MonHoc mon){
+    public String addMonHoc(@ModelAttribute("mon") MonHoc mon, BindingResult result){
+        if(result.hasErrors()){
+            return "monhoc/add";
+        }
         monHocService.addMonHoc(mon);
         return "redirect:/monhoc";
     }
@@ -47,7 +49,10 @@ public class MonHocController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateMonHoc(@PathVariable("id") String id, @ModelAttribute("mon") MonHoc monDetails){
+    public String updateMonHoc(@PathVariable("id") String id, @ModelAttribute("mon") MonHoc monDetails, BindingResult result){
+        if(result.hasErrors()){
+            return "monhoc/edit/{id}";
+        }
         MonHoc mon = monHocService.getMonHocById(id);
         if(mon != null){
             mon.setTenMonHoc(monDetails.getTenMonHoc());

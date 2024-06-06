@@ -1,12 +1,12 @@
 package lab04.lythuyet.controller;
 
-import lab04.lythuyet.entity.Lop;
 import lab04.lythuyet.entity.SinhVien;
 import lab04.lythuyet.services.LopService;
 import lab04.lythuyet.services.SinhVienService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -34,7 +34,10 @@ public class SinhVienController {
     }
 
     @PostMapping("/add")
-    public String addSinhVien(@ModelAttribute("sv") SinhVien sv){
+    public String addSinhVien(@ModelAttribute("sv") SinhVien sv, BindingResult result){
+        if(result.hasErrors()){
+            return "sinhvien/add";
+        }
         sinhVienService.addSinhVien(sv);
         return "redirect:/sinhvien";
     }
@@ -51,7 +54,10 @@ public class SinhVienController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateSinhVien(@PathVariable("id") Long id, @ModelAttribute("sv") SinhVien svDetails){
+    public String updateSinhVien(@PathVariable("id") Long id, @ModelAttribute("sv") SinhVien svDetails, BindingResult result){
+        if(result.hasErrors()){
+            return "sinhvien/edit/{id}";
+        }
         SinhVien sinhVien = sinhVienService.getSinhVienById(id);
         if(sinhVien != null){
             sinhVien.setHoTen(svDetails.getHoTen());

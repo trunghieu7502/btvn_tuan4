@@ -5,6 +5,7 @@ import lab04.lythuyet.services.LopService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -29,7 +30,10 @@ public class LopController {
     }
 
     @PostMapping("/add")
-    public String addLop(@ModelAttribute("lop") Lop lop){
+    public String addLop(@ModelAttribute("lop") Lop lop, BindingResult result){
+        if(result.hasErrors()){
+            return "lop/add";
+        }
         lopService.addLop(lop);
         return "redirect:/lop";
     }
@@ -45,7 +49,10 @@ public class LopController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updateLop(@PathVariable("id") Long id, @ModelAttribute("lop") Lop lopDetails){
+    public String updateLop(@PathVariable("id") Long id, @ModelAttribute("lop") Lop lopDetails, BindingResult result){
+        if(result.hasErrors()){
+            return "lop/edit/{id}";
+        }
         Lop lop = lopService.getLopById(id);
         if(lop != null){
             lop.setTenLop(lopDetails.getTenLop());
