@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm sinh viên</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+    <h1>Thêm sinh viên mới</h1>
+    <form th:action="@{/sinhvien/add}" th:object="${sv}" method="post">
+        <div class="col-6 mb-3">
+            <label class="form-label" for="mssv">Mã sinh viên:</label>
+            <input class="form-control" type="text" th:field="*{mssv}" id="mssv" placeholder="Mã Sinh Viên">
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label" for="hoTen">Họ tên:</label>
+            <input class="form-control" type="text" th:field="*{hoTen}" id="hoTen" placeholder="Họ Tên">
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label" for="ngaySinh">Ngày sinh:</label>
+            <input class="form-control" type="date" th:field="*{ngaySinh}" id="ngaySinh" placeholder="Ngày Sinh">
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label" for="email">Email:</label>
+            <input class="form-control" type="email" th:field="*{email}" id="email" placeholder="Email">
+        </div>
+        <div class="col-6 mb-3">
+            <label class="form-label" for="lop" >Lớp:</label>
+            <select th:field="*{lop}" class="form-control" id="lop">
+                <option th:each="lop : ${lops}" th:value="${lop.maLop}" th:text="${lop.tenLop}"></option>
+            </select>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Thêm mới">
+    </form>
+    <br>
+    <a th:href="@{/sinhvien}">Trở về</a>
+</div>
+</body>
+</html>

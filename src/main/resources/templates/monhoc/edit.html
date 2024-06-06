@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm môn học</title>
+    <th:block th:replace="~{layout::link-css}"></th:block>
+</head>
+<body>
+<th:block th:replace="~{layout::header}"></th:block>
+<div class="container">
+    <h1>Sửa tên lớp</h1>
+    <form th:action="@{/monhoc/edit/{id}(id=${mon.maMon})}" th:object="${mon}" method="post">
+        <div class="col-6 mb-3">
+            <label class="form-label" for="tenMonHoc">Tên lớp:</label>
+            <input class="form-control" type="text" th:field="*{tenMonHoc}" id="tenMonHoc" placeholder="Tên Môn Học">
+        </div>
+        <input type="submit" class="btn btn-primary" value="Lưu">
+    </form>
+    <br>
+    <a th:href="@{/monhoc}">Trở về</a>
+</div>
+</body>
+</html>
